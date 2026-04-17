@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useStore } from "@tanstack/react-store";
 import { gameStore } from "@/store/game-store";
 import { evaluateGuess, MAX_GUESSES, WORD_LENGTH } from "@/lib/evaluate";
@@ -8,6 +9,11 @@ export function Board() {
   const guesses = useStore(gameStore, (s) => s.guesses);
   const currentGuess = useStore(gameStore, (s) => s.currentGuess);
 
+  const evaluations = useMemo(
+    () => guesses.map((g) => evaluateGuess(g, target)),
+    [guesses, target],
+  );
+
   const rows: Array<{
     letters: string[];
     states: Array<ReturnType<typeof evaluateGuess>[number] | undefined>;
@@ -16,7 +22,7 @@ export function Board() {
   for (let r = 0; r < MAX_GUESSES; r++) {
     if (r < guesses.length) {
       const guess = guesses[r];
-      const states = evaluateGuess(guess, target);
+      const states = evaluations[r];
       rows.push({ letters: guess.split(""), states });
     } else if (r === guesses.length) {
       const letters = currentGuess
