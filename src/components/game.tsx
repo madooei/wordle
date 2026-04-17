@@ -53,9 +53,7 @@ export function Game() {
 
       <Keyboard />
 
-      {status !== "playing" && (
-        <Button onClick={newGame}>New Game</Button>
-      )}
+      {status !== "playing" && <Button onClick={newGame}>New Game</Button>}
     </div>
   );
 }
