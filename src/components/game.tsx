@@ -38,12 +38,13 @@ export function Game() {
       <div className="flex h-6 items-center">
         {message && (
           <p
+            aria-live="polite"
             className={
               status === "won"
                 ? "text-green-600 font-semibold"
                 : status === "lost"
                   ? "text-red-600 font-semibold"
-                  : "text-muted-foreground"
+                  : "text-amber-700 font-semibold"
             }
           >
             {message}

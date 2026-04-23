@@ -36,7 +36,13 @@ export const WORDS = [
   "ENEMY",
 ];
 
+const WORD_SET = new Set(WORDS);
+
 export const STARTER_WORD = "SPEED";
+
+export function isWordInList(word: string): boolean {
+  return WORD_SET.has(word.toUpperCase());
+}
 
 export function randomWord(): string {
   return WORDS[Math.floor(Math.random() * WORDS.length)];

@@ -1,6 +1,6 @@
 import { Store } from "@tanstack/store";
 import { MAX_GUESSES, WORD_LENGTH } from "@/lib/evaluate";
-import { randomWord, STARTER_WORD } from "@/lib/words";
+import { isWordInList, randomWord, STARTER_WORD } from "@/lib/words";
 
 export type GameStatus = "playing" | "won" | "lost";
 
@@ -51,6 +51,10 @@ export function submitGuess() {
   if (state.status !== "playing") return;
   if (state.currentGuess.length !== WORD_LENGTH) {
     gameStore.setState((s) => ({ ...s, message: "Not enough letters" }));
+    return;
+  }
+  if (!isWordInList(state.currentGuess)) {
+    gameStore.setState((s) => ({ ...s, message: "Not in word list" }));
     return;
   }
 
